@@ -33,7 +33,7 @@ if ( !class_exists( 'sc_WPBgUpdNotifier' ) ) {
 	class sc_WPBgUpdNotifier {
 		// config happens here
 		static $OPT_EMAIL_TO            = "gerhard.oettl@ogersoft.at";
-		static $OPT_NOTIFY_CORE         = true;
+		static $OPT_NOTIFY_CORE         = false;
 		static $OPT_NOTIFY_PLUGINS      = true;
 		static $OPT_NOTIFY_THEMES       = true;
 		static $OPT_PLUGINS_ALL         = true;  // false = check only active
@@ -76,7 +76,8 @@ if ( !class_exists( 'sc_WPBgUpdNotifier' ) ) {
 			// Send email if anything needs to be updated
 			if ( $core_updated || $plugins_updated || $themes_updated ) {
 				$message = "There are updates available for your WordPress site:\n{$message}\n";
-				$message .= sprintf( "Please visit %s to update.", admin_url( 'update-core.php' ) );
+				#$message .= sprintf( "Please visit %s to update.", admin_url( 'update-core.php' ) );
+				$message .= sprintf( "Please visit %s to update.", admin_url() );
 				static::send_notification_email( $message );
 			}
 
@@ -208,8 +209,10 @@ if ( !class_exists( 'sc_WPBgUpdNotifier' ) ) {
 		 */
 		public function send_notification_email( $message ) {
 
-echo "{$message}\n";
-exit;
+//var_export($argv);
+//echo "\nmail-to: " . static::$OPT_EMAIL_TO . "\n";
+//echo "\n{$message}\n";
+//exit;
 
 			$subject  = sprintf( __( "WP Updates Notifier: Updates Available @ %s" ), home_url() );
 			wp_mail( static::$OPT_EMAIL_TO, $subject, $message ); // send email
@@ -237,11 +240,14 @@ exit;
 }
 
 
-$_SERVER['HTTP_HOST'] = "www.gruene-burgschleinitz-kuehnring.at";
+//$_SERVER['HTTP_HOST'] = "www.gruene-burgschleinitz-kuehnring.at";
+//if ($argv[1]) {
+//	$_SERVER['HTTP_HOST'] = $argv[1];
+//}
 require_once("/usr/share/wordpress/wp-load.php");
-echo ABSPATH . "\n";
+//echo ABSPATH . "\n";
 
-
+//var_export($argv);
 sc_WPBgUpdNotifier::start();
 
 ?>
