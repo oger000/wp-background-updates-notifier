@@ -80,6 +80,12 @@ if ( !class_exists( 'sc_WPBgUpdNotifier' ) ) {
 				$message .= sprintf( "Please visit %s to update.", admin_url() );
 				static::send_notification_email( $message );
 			}
+			else {
+				$message = "Everything is up to date for your WordPress site:\n{$message}\n";
+				#$message .= sprintf( "Please visit %s to update.", admin_url( 'update-core.php' ) );
+				#$message .= sprintf( "Please visit %s to update.", admin_url() );
+				static::send_notification_email( $message );
+			}
 
 		}  // eo do update check
 
