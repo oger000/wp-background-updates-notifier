@@ -220,11 +220,6 @@ if ( !class_exists( 'sc_WPBgUpdNotifier' ) ) {
 //echo "\n{$message}\n";
 //exit;
 
-			$tmpAdminEmail = get_option( 'admin_email' );
-			if ($tmpAdminEmail) {
-				static::$OPT_EMAIL_TO .= "," . $tmpAdminEmail;
-			}
-
 			$subject  = sprintf( __( "WP Updates Notifier: Updates Available @ %s" ), home_url() );
 			wp_mail( static::$OPT_EMAIL_TO, $subject, $message ); // send email
 
